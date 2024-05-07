@@ -34,8 +34,6 @@ const telecomSystem = [{code: 'email', display: 'email', system:'http://hl7.org/
 
 const telecomUse = [{code: 'casa', display: 'casa', system:'http://hl7.org/fhir/contact-point-use'},{code: 'trabajo', display: 'trabajo', system:'http://hl7.org/fhir/contact-point-use'},{code: 'móvil', display: 'móvil', system:'http://hl7.org/fhir/contact-point-use'}];
 
-const administist = [{code: 'male', display: 'Male', definition: 'Male'},{code: 'female', display: 'Female', definition: 'Female'},{code: 'other', display: 'Other', definition: 'Other'},{code: 'unknown', display: 'Unknown', definition: 'Unknown'}];
-
 const contactRelationship = [
     { code: 'C', display: 'Emergency Contact', definition: 'null' },
     { code: 'E', display: 'Employer', definition: 'null' },
@@ -102,12 +100,7 @@ const comunicationLenguage = [
     { code: 'zh-TW', display: 'Chinese', system: 'https://hl7chile.cl/fhir/ig/clcore/CodeSystem/CSCodigoslenguaje' }
 ];
 
-linkType = [
-    { code: 'replaced-by', display: 'Replaced By'},
-    { code: 'replaces', display: 'Replaces'},
-    { code: 'refer', display: 'Refer'},
-    { code: 'seealso', display: 'See Also'}
-]
+
 const telecomCodeList = ['email', 'phone', 'fax', 'pager', 'url', 'sms', 'other'];
 const telecomSystemList= ['http://hl7.org/fhir/contact-point-system']
 const telecomUseList = ['casa', 'trabajo', 'móvil']; 
@@ -119,7 +112,7 @@ const lenguageList = ['es', 'en', 'fr', 'de', 'it' , 'pt', 'zh'];
 /**
  * Class for Paciente state management.
  */
-class PacienteData  {
+export default class PacienteData  {
 
     /**
      * Initializes the instance.
@@ -183,21 +176,21 @@ class PacienteData  {
             }
             
             }
-        this.ethereumAccount= this._generateRandomAccount();    
+        // this.ethereumAccount= this._generateRandomAccount();    
         };        
 
     //seccion de metodos de la clase    
     // Generate a random Ethereum account 
-    _generateRandomAccount() {
-        const wallet = ethers.Wallet.createRandom();
-        const address = wallet.address;
-        const privateKey = wallet.privateKey;
+    // _generateRandomAccount() {
+    //     const wallet = ethers.Wallet.createRandom();
+    //     const address = wallet.address;
+    //     const privateKey = wallet.privateKey;
         
-        return {
-            address,
-            privateKey
-        };
-    };
+    //     return {
+    //         address,
+    //         privateKey
+    //     };
+    // };
     _generateRandomRelationship() {
         const relationship = {
             id: generateRandomChileanRun(),
@@ -283,16 +276,17 @@ class PacienteData  {
     getPatientData() {
         return this.patientData;
     }
-    getEthereumAccount() {
-        return this.ethereumAccount;
-    }
-    getPatient(){
-        return{
-            patient: this.patientData,
-            ethereumAccount: this.ethereumAccount
-        }
-    }
+    // getEthereumAccount() {
+    //     return this.ethereumAccount;
+    // }
+    // getPatient(){
+    //     return{
+    //         patient: this.patientData,
+    //         ethereumAccount: this.ethereumAccount
+    //     }
+    // }
+
 }
 
-
-module.exports = PacienteData;
+export { genderList, sexList, nacionaleidadUrl, codigoDePaises, identifierUse, identifierCoding, telecomSystem, telecomUse, contactRelationship, comunicationLenguage, telecomCodeList, telecomSystemList, telecomUseList, phonePrefixList, emailDomainsList, listaRelaciones, lenguageList}
+// module.exports = PacienteData;
