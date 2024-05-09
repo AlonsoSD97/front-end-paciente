@@ -15,6 +15,11 @@ async function submitTransaction(ABI, ContractAddress, operation, args,  fromAdd
     await sendRequests(createEthereumConnectorRequest(ABI, ContractAddress, operation, args, fromAddress, gasLimit));
 }
 
+async function callTransaction(ABI, ContractAddress, operation, args,  fromAddress, gasLimit) {
+    console.log(createEthereumConnectorRequest(ABI, ContractAddress, operation, args, fromAddress, gasLimit));
+    await callRequests(createEthereumConnectorRequest(ABI, ContractAddress, operation, args, fromAddress, gasLimit));
+}
+
 /**
  * Crea una solicitud de conector Ethereum.
  *
@@ -51,7 +56,7 @@ function extractValuesObjectAnidated(obj) {
         if (typeof obj[key] === 'object' && obj[key] !== null) {
             // Si el valor es un objeto, llamamos recursivamente a extractValuesObjectAnidated
             let nestedObj = extractValuesObjectAnidated(obj[key]);
-            result = result.concat(nestedObj);
+            result = result.concat([nestedObj]);
         } else {
             // Si el valor no es un objeto, lo agregamos al resultado
             result.push(obj[key]);
@@ -100,13 +105,47 @@ async function sendRequests(request) {
             gas: request.gasLimit,
         });
 
-        console.log(result);
+        console.log(request.verb, result);
+    } catch (error) {
+        console.error(error);
+    }
+}
+async function callRequests(request) {
+    try {
+        // Connect to the Ethereum network using web3
+        let web3;
+        if (typeof window.ethereum !== 'undefined') {
+            // Use MetaMask provider
+            web3 = new Web3(window.ethereum);
+            try {
+            // Request account access if needed
+            await window.ethereum.enable();
+            } catch (error) {
+            // User denied account access
+            console.error(error);
+            }
+        } else {
+            // Use your Ethereum provider URL
+            web3 = new Web3('YOUR_ETHEREUM_PROVIDER_URL');
+        }
+
+        // Get the contract instance
+        const contract = new web3.eth.Contract(request.ABI, request.ContractAddress);
+
+        // Send the transaction to the smart contract
+        const result = await contract.methods[request.verb](...request.args).call({
+            from: request.fromAddress,
+            gas: request.gasLimit,
+        });
+
+        console.log(request.verb, result);
     } catch (error) {
         console.error(error);
     }
 }
 export {
     submitTransaction,
+    callTransaction,
     createEthereumConnectorRequest,
     extractValuesObjectAnidated,
     sendRequests

@@ -114,13 +114,14 @@
   
   <script>
   import { submitTransaction} from '../scripts/ConectarSmartcontract.js';
+  import { callTransaction } from '../scripts/ConectarSmartcontract.js';
   import { genderList, sexList, codigoDePaises, identifierUse, identifierCoding, telecomSystem, telecomUse, contactRelationship, comunicationLenguage, telecomCodeList, telecomSystemList, telecomUseList, phonePrefixList, emailDomainsList, listaRelaciones, lenguageList } from '../scripts/PacienteData.js';
   import PacienteData from '../scripts/PacienteData.js';
-  import contractjson from '../assets/paciente.json';
+  import contractjson from '../assets/paciente_v2.json';
 
   let abi = contractjson.abi;
-  let contractAddress = '0xFD0a3F17b95628A73F89CA37DB5eebb02060BfEB';
-  let gas = contractjson.gas;
+  let contractAddress = '0x652a15CCdE318Ac97731937D281AEF88f5368284';
+  let gas = 3000000;
   let operation = 'updatePatientData'
 
 
@@ -151,32 +152,50 @@
 
 
     methods: {
-      validateInput(input, list) {
+    /**
+     * Valida la entrada en comparación con una lista de elementos.
+     * 
+     * @param {string} input - La entrada a validar.
+     * @param {Array} list - La lista de elementos con la cual comparar la entrada.
+     * @returns {boolean} - Devuelve true si la entrada coincide con algún elemento de la lista, de lo contrario devuelve false.
+     */
+    validateInput(input, list) {
         return list.some(item => item.code === input);
-      },
-      updatePatientData() {
+    },
+    async updatePatientData() {
         console.log(this.paciente);
         window.alert(JSON.stringify(this.paciente));
-        // Solicitar dirección mediante Metamask
+
+    // Verificar que this.paciente y this.paciente.patientData están definidos
+        if (!this.paciente || !this.paciente.patientData) {
+            console.error('this.paciente o this.paciente.patientData están indefinidos o son nulos');
+            return;
+            }
+
+    // Solicitar dirección mediante Metamask
         let fromAddress;
         if (typeof window.ethereum !== 'undefined') {
-            window.ethereum.enable().then((accounts) => {
+            try {
+                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                console.log('Dirección obtenida mediante Metamask:', accounts[0]);
                 fromAddress = accounts[0];
                 // Hacer algo con la dirección obtenida, por ejemplo, asignarla a una variable en el componente
-            }).catch((error) => {
-                console.error('Error al solicitar dirección mediante Metamask:', error);
-            });
+                } catch (error) {
+                    console.error('Error al solicitar dirección mediante Metamask:', error);
+                }
         } else {
             console.error('Metamask no está instalado o no es compatible con el navegador');
-        }
-        await submitTransaction(abi, contractAddress, operation, paciente.patientData, fromAddress, gas);
-        
-      // Aquí puedes hacer lo que necesites con los datos actualizados del paciente
-      // Por ejemplo, podrías enviarlos a un servidor o guardarlos en el almacenamiento local
+            }
+
+        await submitTransaction(abi, contractAddress, operation, this.paciente.patientData, fromAddress, gas);
+        await callTransaction(abi, contractAddress, 'getPatientData', this.paciente.patientData, fromAddress, gas);
+},
     },
-      // Otros métodos de validación aquí
-    },
-  };
+}
+
+        // Aquí puedes hacer lo que necesites con los datos actualizados del paciente
+        // Por ejemplo, podrías enviarlos a un servidor o guardarlos en el almacenamiento local
+    
   </script>
 
 <style scoped>
