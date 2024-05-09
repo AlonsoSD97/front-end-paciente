@@ -1,6 +1,4 @@
 <script setup>
-// import HelloWorld from './components/HelloWorld.vue'
-import PacienteData from './components/PacienteData.vue'
 import Navbar from './components/NavBar.vue'
 </script>
 
@@ -17,8 +15,11 @@ import Navbar from './components/NavBar.vue'
   
   <div class="container">
     <Navbar />
-    <h1 class="page-title">Datos del Paciente</h1>
-    <PacienteData />
+    <!-- <h1 class="page-title">Datos del Paciente</h1>
+    <PacienteData /> -->
+  </div>
+  <div id="app" class="container">
+    <router-view />
   </div>
 </template>
 
