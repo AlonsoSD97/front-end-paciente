@@ -1,6 +1,7 @@
 <script setup>
 // import HelloWorld from './components/HelloWorld.vue'
 import PacienteData from './components/PacienteData.vue'
+import Navbar from './components/NavBar.vue'
 </script>
 
 <template>
@@ -15,6 +16,7 @@ import PacienteData from './components/PacienteData.vue'
   <HelloWorld msg="Vite + Vue" /> --> 
   
   <div class="container">
+    <Navbar />
     <h1 class="page-title">Datos del Paciente</h1>
     <PacienteData />
   </div>

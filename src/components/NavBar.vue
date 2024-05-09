@@ -1,37 +1,20 @@
 <template>
-    <nav>
-      <ul>
-        <li><a href="/">Inicio</a></li>
-        <li><a href="/paciente">Datos del Paciente</a></li>
+  <b-navbar toggleable="lg" type="Light" variant="Light">
+    <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+    <b-collapse id="nav-collapse" is-nav>
+      <b-navbar-nav>
+        <b-nav-item><router-link to="/">Inicio</router-link></b-nav-item>
+        <b-nav-item><router-link to="/paciente">Datos del Paciente</router-link></b-nav-item>
+        <b-nav-item><router-link to="/info">Info</router-link></b-nav-item>
         <!-- Agrega más enlaces aquí según sea necesario -->
-      </ul>
-    </nav>
-  </template>
-  
-  <script>
-  export default {
-    name: 'Navbar'
-  }
-  </script>
-  
-  <style scoped>
-  nav {
-    background-color: #333;
-    color: #fff;
-    padding: 10px;
-  }
-  
-  nav ul {
-    list-style-type: none;
-  }
-  
-  nav ul li {
-    display: inline;
-    margin-right: 10px;
-  }
-  
-  nav ul li a {
-    color: #fff;
-    text-decoration: none;
-  }
-  </style>
+      </b-navbar-nav>
+    </b-collapse>
+  </b-navbar>
+</template>
+
+<script>
+export default {
+  name: 'Navbar'
+}
+</script>
