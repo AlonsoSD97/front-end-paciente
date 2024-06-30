@@ -39,6 +39,15 @@
               </option>
           </select>
       </div>
+
+        <div class="form-group">
+          <label for="identifierTypePaises">Paises del Tipo de Identificador:</label>
+          <select v-model="paciente.patientData.identifier.type.paises">
+              <option v-for="pais in codigoDePaises" :key="pais.code" :value="pais">
+                  {{ pais.display }}
+              </option>
+          </select>
+      </div>
   
       <div class="form-group">
           <label for="identifierType">Tipo de Documento de Identificación:</label>
@@ -64,15 +73,15 @@
           <input type="text" v-model="paciente.patientData.NombreOficial.family.segundoApellido">
       </div>
   
-  
-      <div class="form-group">
-          <label for="identifierTypePaises">Paises del Tipo de Identificador:</label>
-          <select v-model="paciente.patientData.identifier.type.paises">
-              <option v-for="pais in codigoDePaises" :key="pais.code" :value="pais">
-                  {{ pais.display }}
+      <!-- <div class="form-group">
+          <label for="nombreOficialUse">Uso del Nombre Oficial:</label>
+          <select v-model="paciente.patientData.NombreOficial.use">
+              <option v-for="use in nameUse" :key="use" :value="use">
+                  {{ use }}
               </option>
           </select>
-      </div>
+      </div> -->
+  
   
       <div class="form-group">
           <label for="nombreSocial">Nombre Social:</label>
@@ -87,6 +96,8 @@
               </option>
           </select>
       </div>
+
+
   
       <div class="form-group">
           <label for="telecomUse">Uso de Contacto:</label>
@@ -128,7 +139,7 @@
   
       <div class="form-group">
           <label for="number">Número:</label>
-          <input type="number" v-model="paciente.patientData.address.number">
+          <input type="text" v-model="paciente.patientData.address.number">
       </div>
   
       <div class="form-group">
@@ -238,7 +249,10 @@
 
         await submitTransaction(abi, contractAddress, operation, this.paciente.patientData, fromAddress, gas);
         await callTransaction(abi, contractAddress, 'getPatientData', this.paciente.patientData, fromAddress, gas);
-},
+        },
+    clearForm() {
+        this.paciente.clearPatientData();
+        },
     },
 }
 

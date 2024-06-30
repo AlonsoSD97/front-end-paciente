@@ -3,6 +3,8 @@ import Navbar from './components/NavBar.vue'
 </script>
 
 <template>
+
+
   <!-- <div>
     <a href="https://vitejs.dev" target="_blank">
       <img src="/vite.svg" class="logo" alt="Vite logo" />
@@ -13,12 +15,11 @@ import Navbar from './components/NavBar.vue'
   </div>
   <HelloWorld msg="Vite + Vue" /> --> 
   
-  <div class="container">
+  <!--div class="container">
     <Navbar />
-    <!-- <h1 class="page-title">Datos del Paciente</h1>
-    <PacienteData /> -->
-  </div>
+  </div> -->
   <div id="app" class="container">
+    <Navbar />
     <router-view />
   </div>
 </template>
@@ -46,6 +47,16 @@ web3.eth.getAccounts().then(console.log);
 </script>
 
 <style scoped>
+
+#app {
+  /* background-image: url('./assets/background.jpg'); */
+  background-position: left;
+  background-position: right;
+  background-repeat: repeat;
+  background-size: cover;
+  height: 100vh;
+  width: 100vw;
+}
 body {
   background-color: #f8f8f8;
   font-family: Arial, sans-serif;

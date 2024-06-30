@@ -273,6 +273,73 @@ export default class PacienteData  {
 
         return result;
     }
+    clearPatientData() {
+        this.patientData = {
+            identidadDeGenero: null,
+            sexoBiologico: null,
+            nacionalidad: {
+                url: nacionaleidadUrl,
+                value: {
+                    coding: null
+                }
+            },
+            identifier: {
+                use: null,
+                type: {
+                    paises: null,
+                    coding: null
+                },
+                value: null
+            },
+            NombreOficial: {
+                use: null,
+                family: {
+                    segundoApellido: null
+                },
+                given: null
+            },
+            NombreSocial: {
+                use: null,
+                given: null
+            },
+            telecom: {
+                system: null,
+                value: null,
+                use: null
+            },
+            birthDate: null,
+            address: {
+                country: null,
+                city: null,
+                street: null,
+                postalCode: null,
+                number: null
+            },
+            contact: {
+                IdContacto: null,
+                relationship: null,
+                name: {
+                    use: 'usual',
+                    family: {
+                        segundoApellido: null
+                    },
+                    given: null
+                }
+            },
+            communication: {
+                lenguage: {
+                    coding: null
+                }
+            },
+            generalPractitioner: {
+                id: null,
+                reference: 'Practitioner/reference',
+                display: null
+            }
+        };
+    }
+
+
     getPatientData() {
         return this.patientData;
     }
